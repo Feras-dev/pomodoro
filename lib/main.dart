@@ -97,6 +97,15 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              'No tasks to complete.',
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+            Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 6)),
+            Text(
+              'Press Add Task to add a new one!',
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ],
         ),
       ),
