@@ -100,6 +100,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _incrementCounter,
+        label: Text('Add Task'),
+        tooltip: 'Increment',
+        icon: Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
