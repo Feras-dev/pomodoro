@@ -44,42 +44,44 @@ class MyAddTaskFormState extends State<MyAddTaskForm> {
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Form(
-      key: _formKey,
-      child: Container(
-        width: 400.0,
-        padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 20.0),
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Task Name',
-              ),
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Work Interval',
-              ),
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Break Interval',
-              ),
-            ),
-            new Container(
-                width: 400.0,
-                padding:
-                    const EdgeInsets.only(left: 30.0, right: 30.0, top: 30.0),
-                child: new RaisedButton(
-                  child: const Text('Add Task'),
-                  onPressed: () {
-                    showAlertDialog(context);
-                  },
-                  color: Colors.red,
-                )),
-          ],
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Add a new task"),
         ),
-      ),
-    );
+        body: Form(
+          key: _formKey,
+          child: Container(
+            padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Task Name',
+                  ),
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Work Interval',
+                  ),
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Break Interval',
+                  ),
+                ),
+                Padding(padding: const EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                Container(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    child: const Text('Add Task'),
+                    onPressed: () {
+                      showAlertDialog(context);
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }

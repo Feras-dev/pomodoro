@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pomodoro/addTask.dart';
 
 void main() {
   runApp(MyApp());
@@ -50,17 +51,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  void _gotoAddTask() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MyAddTaskForm()));
   }
 
   @override
@@ -110,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: _incrementCounter,
+        onPressed: _gotoAddTask,
         label: Text('Add Task'),
         tooltip: 'Increment',
         icon: Icon(Icons.add),
