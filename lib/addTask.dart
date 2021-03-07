@@ -41,6 +41,11 @@ class MyAddTaskFormState extends State<MyAddTaskForm> {
   // and allows validation of the form.
   final _formKey = GlobalKey<FormState>();
 
+  bool isNumber(String string) {
+    final numericRegex = RegExp(r"^[1-9]\d*$");
+    return numericRegex.hasMatch(string);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
@@ -55,16 +60,40 @@ class MyAddTaskFormState extends State<MyAddTaskForm> {
             child: Column(
               children: <Widget>[
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Please enter the task name";
+                    }
+                    return null;
+                  },
                   decoration: const InputDecoration(
                     labelText: 'Task Name',
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Please enter work interval";
+                    } else if (!isNumber(value)) {
+                      return "Please enter a valid number";
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: 'Work Interval',
                   ),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Please enter break interval";
+                    } else if (!isNumber(value)) {
+                      return "Please enter a valid number";
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: 'Break Interval',
                   ),
@@ -75,7 +104,9 @@ class MyAddTaskFormState extends State<MyAddTaskForm> {
                   child: ElevatedButton(
                     child: const Text('Add Task'),
                     onPressed: () {
-                      showAlertDialog(context);
+                      if (_formKey.currentState.validate()) {
+                        showAlertDialog(context);
+                      }
                     },
                   ),
                 )
