@@ -1,8 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'dart:async';
-
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 
 class Task {
   int id;
