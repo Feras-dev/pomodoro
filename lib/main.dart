@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pomodoro/addTask.dart';
+
+import 'view/addTask.dart';
 
 void main() {
   runApp(MyApp());
