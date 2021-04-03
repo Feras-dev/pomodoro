@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Create a Form widget.
-class MyAddTaskForm extends StatefulWidget {
+class AddTaskForm extends StatefulWidget {
   @override
-  MyAddTaskFormState createState() {
-    return MyAddTaskFormState();
+  AddTaskFormState createState() {
+    return AddTaskFormState();
   }
 }
 
@@ -37,10 +37,12 @@ showAlertDialog(BuildContext context) {
 }
 
 // Create a corresponding State class. This class holds data related to the form.
-class MyAddTaskFormState extends State<MyAddTaskForm> {
+class AddTaskFormState extends State<AddTaskForm> {
+  String id = '';
   String _taskName = '';
   String _workInterval = '';
   String _breakInterval = '';
+  String isComplete = 'no';
 
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
@@ -91,6 +93,11 @@ class MyAddTaskFormState extends State<MyAddTaskForm> {
       decoration: const InputDecoration(
         labelText: 'Work Interval',
       ),
+      onSaved: (String value) {
+        setState(() {
+          _workInterval = value;
+        });
+      },
     );
   }
 
@@ -108,6 +115,11 @@ class MyAddTaskFormState extends State<MyAddTaskForm> {
       decoration: const InputDecoration(
         labelText: 'Break Interval',
       ),
+      onSaved: (String value) {
+        setState(() {
+          _breakInterval = value;
+        });
+      },
     );
   }
 
