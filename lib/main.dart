@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'view/addTask.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -9,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Pomodoro',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Pomodoro'),
     );
   }
 }
@@ -50,17 +52,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  void _gotoAddTask() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MyAddTaskForm()));
   }
 
   @override
@@ -98,19 +93,22 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the button this many times:',
+              'No tasks to complete.',
+              style: Theme.of(context).textTheme.bodyText2,
             ),
+            Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 6)),
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              'Press Add Task to add a new one!',
+              style: Theme.of(context).textTheme.bodyText2,
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _gotoAddTask,
+        label: Text('Add Task'),
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        icon: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
