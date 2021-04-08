@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Task.dart';
+import 'dart:convert';
 
 // Create a Form widget.
 class AddTaskForm extends StatefulWidget {
@@ -38,6 +40,7 @@ showAlertDialog(BuildContext context) {
 
 // Create a corresponding State class. This class holds data related to the form.
 class AddTaskFormState extends State<AddTaskForm> {
+  List<Task> taskList = [];
   String id = '';
   String _taskName = '';
   String _workInterval = '';
@@ -49,10 +52,12 @@ class AddTaskFormState extends State<AddTaskForm> {
   final _formKey = GlobalKey<FormState>();
 
   saveData() async {
+    Task t = new Task(_taskName, _workInterval, _breakInterval);
+    taskList.add(t);
+    List<String> myLists =
+        taskList.map((task) => json.encode(task.toJson())).toList();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('taskName', _taskName);
-    prefs.setString('workInterval', _workInterval);
-    prefs.setString('breakInterval', _breakInterval);
+    await prefs.setStringList('taskList', myLists);
   }
 
   bool isNumber(String string) {
