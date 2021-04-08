@@ -44,6 +44,7 @@ showAlertDialog(BuildContext context) {
 
 // Create a corresponding State class. This class holds data related to the form.
 class AddTaskFormState extends State<AddTaskForm> {
+  List<Task> taskList = [];
   String id = '';
   String _taskName = '';
   String _workInterval = '';
@@ -67,6 +68,12 @@ class AddTaskFormState extends State<AddTaskForm> {
 
     // Singleton Storage class is used to access the
     // storage.
+    Task t = new Task(_taskName, _workInterval, _breakInterval);
+    taskList.add(t);
+    List<String> myLists =
+        taskList.map((task) => json.encode(task.toJson())).toList();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('taskList', myLists);
     Storage().storeTask(task);
   }
 
@@ -186,7 +193,7 @@ class AddTaskFormState extends State<AddTaskForm> {
             String valUse = classType.toString().split(".").last.toLowerCase();
             valUse = valUse[0].toUpperCase() + valUse.substring(1);
             if (valUse.contains("_")) {
-              valUse = valUse.replaceAll(new RegExp('[\\W_]+'),' ');
+              valUse = valUse.replaceAll(new RegExp('[\\W_]+'), ' ');
             }
             return DropdownMenuItem<PriorityLevel>(
                 value: classType, child: Text(valUse));
