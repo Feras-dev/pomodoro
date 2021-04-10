@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'PriorityLevel.dart';
+
 part 'Task.g.dart';
 
 /// An annotation for the code generator to know that this class needs the
@@ -12,11 +14,13 @@ class Task {
   int workDuration;
   int breakDuration;
   bool isComplete;
+  PriorityLevel priorityLevel;
 
   Task(
       {@required this.name,
       @required this.breakDuration,
-      @required this.workDuration}) {
+      @required this.workDuration,
+      @required this.priorityLevel}) {
     this.id = DateTime.now().millisecondsSinceEpoch;
     this.isComplete = false;
   }
