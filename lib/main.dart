@@ -61,8 +61,11 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Text('pomodoro'),
           centerTitle: true,
         ),
-        body: ListView(
-          children: _cards(),
+        body: Container(
+          padding: EdgeInsets.all(10),
+          child: ListView(
+            children: _cards(),
+          ),
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
@@ -105,22 +108,28 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _cards() {
     return taskList
         .map((task) => Container(
-              color: Colors.blue,
               width: 100,
               height: 60,
+              decoration: BoxDecoration(color: Colors.white,
+                  // borderRadius: BorderRadius.circular(40),
+                  boxShadow: [
+                    BoxShadow(),
+                    //   BoxShadow(offset: Offset(20, 20), color: Colors.yellow),
+                  ]),
               margin: EdgeInsets.all(5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
                     task.taskName,
+                    style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
                   Text(
                     task.workInterval,
+                    style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
-                  Text(
-                    task.breakInterval,
-                  ),
+                  Text(task.breakInterval,
+                      style: TextStyle(fontSize: 16, color: Colors.black)),
                 ],
               ),
             ))
