@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pomodoro/addTask.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'addTask.dart';
+import 'dart:convert';
+import 'Task.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,9 +32,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _taskName = '';
-  String _workInterval = '';
-  String _breakInterval = '';
+  List<Task> taskList;
 
   @override
   void initState() {
@@ -41,55 +41,89 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.getString('taskName');
-    prefs.getString('workInterval');
-    prefs.getString('breakInterval');
-    setState(() {
-      _taskName = prefs.getString('taskName');
-      _workInterval = prefs.getString('workInterval');
-      _breakInterval = prefs.getString('breakInterval');
-    });
+    List<String> result = prefs.getStringList('taskList');
+    if (result != null) {
+      List<Task> tasks =
+          result.map((t) => Task.fromJson(json.decode(t))).toList();
+      setState(() {
+        taskList = tasks;
+      });
+    } else {
+      print("You have no Task to complete right now");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('pomodoro'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              _taskName,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 6)),
-            Text(
-              _workInterval,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            Text(
-              _breakInterval,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-          ],
+    if (taskList != null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('pomodoro'),
+          centerTitle: true,
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.pushNamed(context, "/addTask").then((value) {
-            setState(() {
-              getData();
+        body: ListView(
+          children: _cards(),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.pushNamed(context, "/addTask").then((value) {
+              setState(() {
+                getData();
+              });
             });
-          });
-        },
-        label: Text('Add Task'),
-        tooltip: 'Increment',
-        icon: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+          },
+          label: Text('Add Task'),
+          tooltip: 'Increment',
+          icon: Icon(Icons.add),
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('pomodoro'),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Text("No Task"),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.pushNamed(context, "/addTask").then((value) {
+              setState(() {
+                getData();
+              });
+            });
+          },
+          label: Text('Add Task'),
+          tooltip: 'Increment',
+          icon: Icon(Icons.add),
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+      );
+    }
+  }
+
+  List<Widget> _cards() {
+    return taskList
+        .map((task) => Container(
+              color: Colors.blue,
+              width: 100,
+              height: 60,
+              margin: EdgeInsets.all(5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    task.taskName,
+                  ),
+                  Text(
+                    task.workInterval,
+                  ),
+                  Text(
+                    task.breakInterval,
+                  ),
+                ],
+              ),
+            ))
+        .toList();
   }
 }

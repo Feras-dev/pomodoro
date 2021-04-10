@@ -1,19 +1,20 @@
 class Task {
-  String name;
-  String workDuration;
-  String breakDuration;
+  String taskName;
+  String workInterval;
+  String breakInterval;
   // int id;
-  // bool isComplete;
+  // bool isComplete
   //
-  Task(
-    this.name,
-    this.breakDuration,
-    this.workDuration,
-  );
+  Task({this.taskName, this.breakInterval, this.workInterval});
 
   Map toJson() => {
-        'name': name,
-        'workDuration': workDuration,
-        'breakDuration': breakDuration,
+        'taskName': taskName,
+        'workInterval': workInterval,
+        'breakInterval': breakInterval,
       };
+
+  Task.fromJson(Map<String, dynamic> json)
+      : taskName = json['taskName'],
+        workInterval = json['workInterval'],
+        breakInterval = json['breakInterval'];
 }

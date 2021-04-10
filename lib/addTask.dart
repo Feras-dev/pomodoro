@@ -40,23 +40,30 @@ showAlertDialog(BuildContext context) {
 
 // Create a corresponding State class. This class holds data related to the form.
 class AddTaskFormState extends State<AddTaskForm> {
-  List<Task> taskList = [];
   String id = '';
   String _taskName = '';
   String _workInterval = '';
   String _breakInterval = '';
   String isComplete = 'no';
 
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
   final _formKey = GlobalKey<FormState>();
 
   saveData() async {
-    Task t = new Task(_taskName, _workInterval, _breakInterval);
-    taskList.add(t);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> result = prefs.getStringList('taskList');
+    List<Task> taskList;
+    if (result != null)
+      taskList = result.map((t) => Task.fromJson(json.decode(t))).toList();
+    else
+      taskList = [];
+    Task newTask = new Task(
+        taskName: _taskName,
+        workInterval: _workInterval,
+        breakInterval: _breakInterval);
+    taskList.add(newTask);
     List<String> myLists =
         taskList.map((task) => json.encode(task.toJson())).toList();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(myLists);
     await prefs.setStringList('taskList', myLists);
   }
 
