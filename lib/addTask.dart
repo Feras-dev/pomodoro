@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Task.dart';
 import 'dart:convert';
+import 'package:uuid/uuid.dart';
 
 // Create a Form widget.
 class AddTaskForm extends StatefulWidget {
@@ -40,11 +41,9 @@ showAlertDialog(BuildContext context) {
 
 // Create a corresponding State class. This class holds data related to the form.
 class AddTaskFormState extends State<AddTaskForm> {
-  String id = '';
   String _taskName = '';
   String _workInterval = '';
   String _breakInterval = '';
-  String isComplete = 'no';
 
   final _formKey = GlobalKey<FormState>();
 
@@ -56,14 +55,17 @@ class AddTaskFormState extends State<AddTaskForm> {
       taskList = result.map((t) => Task.fromJson(json.decode(t))).toList();
     else
       taskList = [];
+    // Create Unique ID
+    var uuid = Uuid();
     Task newTask = new Task(
+        id: uuid.v4(),
         taskName: _taskName,
         workInterval: _workInterval,
         breakInterval: _breakInterval);
     taskList.add(newTask);
     List<String> myLists =
         taskList.map((task) => json.encode(task.toJson())).toList();
-    print(myLists);
+    // print(myLists);
     await prefs.setStringList('taskList', myLists);
   }
 
