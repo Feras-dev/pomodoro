@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'addTask.dart';
+import 'view/addTask.dart';
 import 'dart:convert';
-import 'Task.dart';
+import 'model/Task.dart';
 
 void main() {
   runApp(MyApp());

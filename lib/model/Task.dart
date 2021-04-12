@@ -12,6 +12,7 @@ class Task {
       this.workInterval,
       this.isComplete = false});
 
+  // Convert Map object
   Map toJson() => {
         'this.id': id,
         'taskName': taskName,
@@ -20,6 +21,7 @@ class Task {
         'isComplete': isComplete,
       };
 
+  // Substitute Map object for Task
   Task.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         taskName = json['taskName'],
