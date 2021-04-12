@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../model/Task.dart';
-import 'dart:convert';
-import 'package:uuid/uuid.dart';
 
 // Create a Form widget.
 class AddTaskForm extends StatefulWidget {
@@ -14,7 +10,7 @@ class AddTaskForm extends StatefulWidget {
 
 showAlertDialog(BuildContext context) {
   // Create button
-  Widget okButton = FlatButton(
+  Widget okButton = TextButton(
     child: Text("OK"),
     onPressed: () {
       Navigator.of(context).pop();
@@ -41,100 +37,13 @@ showAlertDialog(BuildContext context) {
 
 // Create a corresponding State class. This class holds data related to the form.
 class AddTaskFormState extends State<AddTaskForm> {
-  String _taskName = '';
-  String _workInterval = '';
-  String _breakInterval = '';
-
+  // Create a global key that uniquely identifies the Form widget
+  // and allows validation of the form.
   final _formKey = GlobalKey<FormState>();
-
-  saveData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> result = prefs.getStringList('taskList');
-    List<Task> taskList;
-    if (result != null)
-      taskList = result.map((t) => Task.fromJson(json.decode(t))).toList();
-    else
-      taskList = [];
-    // Create Unique ID
-    var uuid = Uuid();
-    Task newTask = new Task(
-        id: uuid.v4(),
-        taskName: _taskName,
-        workInterval: _workInterval,
-        breakInterval: _breakInterval);
-    taskList.add(newTask);
-    List<String> myLists =
-        taskList.map((task) => json.encode(task.toJson())).toList();
-    // print(myLists);
-    await prefs.setStringList('taskList', myLists);
-  }
 
   bool isNumber(String string) {
     final numericRegex = RegExp(r"^[1-9]\d*$");
     return numericRegex.hasMatch(string);
-  }
-
-  Widget _buildTaskField() {
-    return TextFormField(
-      validator: (value) {
-        if (value.isEmpty) {
-          return "Please enter the task name";
-        }
-        return null;
-      },
-      decoration: const InputDecoration(
-        labelText: 'Task Name',
-      ),
-      onSaved: (String value) {
-        setState(() {
-          _taskName = value;
-        });
-      },
-    );
-  }
-
-  Widget _buildWorkIntervalField() {
-    return TextFormField(
-      validator: (value) {
-        if (value.isEmpty) {
-          return "Please enter work interval";
-        } else if (!isNumber(value)) {
-          return "Please enter a valid number";
-        }
-        return null;
-      },
-      keyboardType: TextInputType.number,
-      decoration: const InputDecoration(
-        labelText: 'Work Interval',
-      ),
-      onSaved: (String value) {
-        setState(() {
-          _workInterval = value;
-        });
-      },
-    );
-  }
-
-  Widget _buildBreakIntervalField() {
-    return TextFormField(
-      validator: (value) {
-        if (value.isEmpty) {
-          return "Please enter break interval";
-        } else if (!isNumber(value)) {
-          return "Please enter a valid number";
-        }
-        return null;
-      },
-      keyboardType: TextInputType.number,
-      decoration: const InputDecoration(
-        labelText: 'Break Interval',
-      ),
-      onSaved: (String value) {
-        setState(() {
-          _breakInterval = value;
-        });
-      },
-    );
   }
 
   @override
@@ -150,9 +59,45 @@ class AddTaskFormState extends State<AddTaskForm> {
             padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
             child: Column(
               children: <Widget>[
-                _buildTaskField(),
-                _buildWorkIntervalField(),
-                _buildBreakIntervalField(),
+                TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Please enter the task name";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Task Name',
+                  ),
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Please enter work interval";
+                    } else if (!isNumber(value)) {
+                      return "Please enter a valid number";
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Work Interval',
+                  ),
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Please enter break interval";
+                    } else if (!isNumber(value)) {
+                      return "Please enter a valid number";
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Break Interval',
+                  ),
+                ),
                 Padding(padding: const EdgeInsets.fromLTRB(0, 16, 0, 0)),
                 Container(
                   width: double.infinity,
@@ -160,8 +105,6 @@ class AddTaskFormState extends State<AddTaskForm> {
                     child: const Text('Add Task'),
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-                        _formKey.currentState.save();
-                        saveData();
                         showAlertDialog(context);
                       }
                     },
