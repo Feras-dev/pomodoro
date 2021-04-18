@@ -63,5 +63,6 @@ const _$PriorityLevelEnumMap = {
   PriorityLevel.LOW: 'low',
   PriorityLevel.MEDIUM: 'medium',
   PriorityLevel.HIGH: 'high',
+  PriorityLevel.VERY_HIGH: 'very_high',
   PriorityLevel.CRITICAL: 'critical',
 };

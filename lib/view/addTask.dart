@@ -185,6 +185,9 @@ class AddTaskFormState extends State<AddTaskForm> {
             // in the dropdown.
             String valUse = classType.toString().split(".").last.toLowerCase();
             valUse = valUse[0].toUpperCase() + valUse.substring(1);
+            if (valUse.contains("_")) {
+              valUse = valUse.replaceAll(new RegExp('[\\W_]+'),' ');
+            }
             return DropdownMenuItem<PriorityLevel>(
                 value: classType, child: Text(valUse));
           }).toList()),

@@ -9,6 +9,8 @@ enum PriorityLevel {
   MEDIUM,
   @JsonValue("high")
   HIGH,
+  @JsonValue("very_high")
+  VERY_HIGH,
   @JsonValue("critical")
   CRITICAL,
 }
