@@ -26,7 +26,8 @@ class Storage {
   // Whenever this class is instantiated, this will
   // create a new SharedPreferences instance to be used.
   Future<SharedPreferences> enableStorage() async {
-    return await SharedPreferences.getInstance();
+    prefs = await SharedPreferences.getInstance();
+    return prefs;
   }
 
   // All below methods will use SharedPreferences
@@ -50,10 +51,24 @@ class Storage {
     taskList.add(task);
 
     // Encode the modified list into JSON again to store.
-    List<String> myList = taskList.map((task) => json.encode(task.toJson())).toList();
+    List<String> myList =
+        taskList.map((task) => json.encode(task.toJson())).toList();
 
     // DEBUG:
     // print(myList);
     return prefs.setStringList(TASK_LIST, myList);
+  }
+
+  List<Task> getTasks() {
+    List<String> result = prefs.getStringList(TASK_LIST);
+    List<Task> tasks = [];
+    if (result != null)
+      tasks = result.map((t) => Task.fromJson(json.decode(t))).toList();
+    return tasks;
+  }
+
+  // For debugging
+  void removeAllTasks() async {
+    await prefs.clear();
   }
 }

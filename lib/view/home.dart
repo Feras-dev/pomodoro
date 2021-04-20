@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pomodoro/model/Storage.dart';
+import 'package:pomodoro/model/Task.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -9,11 +10,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // These variables will hold values entered by the user
-  // on AddTask page.
-  String _taskName = '';
-  String _workInterval = '';
-  String _breakInterval = '';
+  List<Task> taskList;
 
   // initState is called exactly once during lifecycle of the
   // page.
@@ -24,15 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Gets the data from shared_preferences and sets it to
   // the state object.
-  getData() async {
-    // Get a reference to the SharedPreferences instance.
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  getData() {
     setState(() {
-      // Set the user inputted data to the local variables if present.
-      // Otherwise ask the user to add the task.
-      _taskName = prefs.getString('taskName') ?? "No tasks to complete.";
-      _workInterval = prefs.getString('workInterval') ?? "Press Add Task to add a new one!";
-      _breakInterval = prefs.getString('breakInterval') ?? "";
+      taskList = Storage().getTasks();
     });
   }
 
@@ -43,24 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('Pomodoro'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              _taskName,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 6)),
-            Text(
-              _workInterval,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            Text(
-              _breakInterval,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-          ],
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: ListView(
+          children: _cards(),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -80,5 +57,38 @@ class _HomeScreenState extends State<HomeScreen> {
         icon: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  List<Widget> _cards() {
+    return taskList
+        .map((task) => Container(
+              width: 100,
+              height: 60,
+              decoration: BoxDecoration(color: Colors.white,
+                  // borderRadius: BorderRadius.circular(40),
+                  boxShadow: [
+                    BoxShadow(),
+                    //   BoxShadow(offset: Offset(20, 20), color: Colors.yellow),
+                  ]),
+              margin: EdgeInsets.all(5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    task.name,
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                  Text(
+                    task.workDuration.toString(),
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                  Text(
+                    task.breakDuration.toString(),
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                ],
+              ),
+            ))
+        .toList();
   }
 }
