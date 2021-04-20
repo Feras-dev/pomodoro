@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pomodoro/model/PriorityLevel.dart';
 import 'package:pomodoro/model/Storage.dart';
 import 'package:pomodoro/model/Task.dart';
+import 'package:uuid/uuid.dart';
 
 // Create a Form widget.
 class AddTaskForm extends StatefulWidget {
@@ -56,25 +57,27 @@ class AddTaskFormState extends State<AddTaskForm> {
   // and allows validation of the form.
   final _formKey = GlobalKey<FormState>();
 
-  saveData() async {
+  saveData(BuildContext context) async {
     // Whenever user presses Add Task button,
     // we take all the data entered by the user and
     // construct a new Task object with it.
+    var uuid = Uuid();
     Task task = Task(
+        id: uuid.v4(),
         name: _taskName,
         breakDuration: int.parse(_breakInterval),
         workDuration: int.parse(_workInterval),
-        priorityLevel: _taskPriority);
+        priorityLevel: _taskPriority,
+        isComplete: false);
 
     // Singleton Storage class is used to access the
     // storage.
-    Task t = new Task(_taskName, _workInterval, _breakInterval);
-    taskList.add(t);
-    List<String> myLists =
-        taskList.map((task) => json.encode(task.toJson())).toList();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('taskList', myLists);
-    Storage().storeTask(task);
+    bool isSuccess = await Storage().addTask(task);
+
+    // Show alert only if the task has been stored successfully.
+    if (isSuccess) {
+      showAlertDialog(context);
+    }
   }
 
   // Regex to confirm that given string is all numbers.
@@ -231,8 +234,7 @@ class AddTaskFormState extends State<AddTaskForm> {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
                         // Save the data.
-                        saveData();
-                        showAlertDialog(context);
+                        saveData(context);
                       }
                     },
                   ),

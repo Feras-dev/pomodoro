@@ -9,7 +9,7 @@ part 'Task.g.dart';
 /// JSON serialization logic to be generated.
 @JsonSerializable()
 class Task {
-  int id;
+  String id;
   String name;
   int workDuration;
   int breakDuration;
@@ -17,13 +17,12 @@ class Task {
   PriorityLevel priorityLevel;
 
   Task(
-      {@required this.name,
+      {@required this.id,
+      @required this.name,
       @required this.breakDuration,
       @required this.workDuration,
-      @required this.priorityLevel}) {
-    this.id = DateTime.now().millisecondsSinceEpoch;
-    this.isComplete = false;
-  }
+      @required this.priorityLevel,
+      @required this.isComplete});
 
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$TaskFromJson()` constructor.

@@ -8,14 +8,14 @@ part of 'Task.dart';
 
 Task _$TaskFromJson(Map<String, dynamic> json) {
   return Task(
+    id: json['id'] as String,
     name: json['name'] as String,
     breakDuration: json['breakDuration'] as int,
     workDuration: json['workDuration'] as int,
     priorityLevel:
         _$enumDecodeNullable(_$PriorityLevelEnumMap, json['priorityLevel']),
-  )
-    ..id = json['id'] as int
-    ..isComplete = json['isComplete'] as bool;
+    isComplete: json['isComplete'] as bool,
+  );
 }
 
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
