@@ -62,8 +62,11 @@ class Storage {
   List<Task> getTasks() {
     List<String> result = prefs.getStringList(TASK_LIST);
     List<Task> tasks = [];
-    if (result != null)
+    if (result != null) {
       tasks = result.map((t) => Task.fromJson(json.decode(t))).toList();
+      tasks.sort(
+          (a, b) => (a.priorityLevel.index).compareTo(b.priorityLevel.index));
+    }
     return tasks;
   }
 
