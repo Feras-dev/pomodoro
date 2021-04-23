@@ -86,6 +86,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     task.breakDuration.toString(),
                     style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
+                  Icon(
+                    Icons.delete,
+                    color: Colors.grey,
+                    size: 24.0,
+                  ),
                 ],
               ),
             ))
