@@ -86,10 +86,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     task.breakDuration.toString(),
                     style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
-                  Icon(
-                    Icons.delete,
+                  IconButton(
+                    icon: const Icon(Icons.delete),
                     color: Colors.grey,
-                    size: 24.0,
+                    //size: 24.0,
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/deleteTask");
+                    },
                   ),
                 ],
               ),
