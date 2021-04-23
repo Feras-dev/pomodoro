@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pomodoro/model/Storage.dart';
 import 'view/addTask.dart';
 import 'view/home.dart';
+import 'view/deleteTask.dart';
 
 void main() async {
   // If you're running an application and need to access the binary
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         // All the available routes in the app.
         '/home': (context) => HomeScreen(),
         '/addTask': (context) => AddTaskForm(),
+        '/deleteTask': (context) => DeleteTaskScreen(),
       },
       // The app's entry page.
       home: HomeScreen(),
