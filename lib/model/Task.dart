@@ -1,25 +1,28 @@
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'PriorityLevel.dart';
+
 part 'Task.g.dart';
 
 /// An annotation for the code generator to know that this class needs the
 /// JSON serialization logic to be generated.
 @JsonSerializable()
 class Task {
-  int id;
+  String id;
   String name;
   int workDuration;
   int breakDuration;
   bool isComplete;
+  PriorityLevel priorityLevel;
 
   Task(
-      {@required this.name,
+      {@required this.id,
+      @required this.name,
       @required this.breakDuration,
-      @required this.workDuration}) {
-    this.id = DateTime.now().millisecondsSinceEpoch;
-    this.isComplete = false;
-  }
+      @required this.workDuration,
+      @required this.priorityLevel,
+      @required this.isComplete});
 
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$TaskFromJson()` constructor.
