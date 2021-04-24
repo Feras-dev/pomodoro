@@ -230,7 +230,7 @@ class EditTaskFormState extends State<EditTaskForm> {
     // Build a Form widget using the _formKey created above.
     return Scaffold(
         appBar: AppBar(
-          title: Text("Edit task"),
+          title: Text("Edit Task"),
         ),
         body: Form(
           key: _formKey,
