@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pomodoro/model/Storage.dart';
 import 'package:pomodoro/model/Task.dart';
+import 'package:pomodoro/view/deleteTask.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -91,7 +92,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.grey,
                     //size: 24.0,
                     onPressed: () {
-                      Navigator.pushNamed(context, "/deleteTask");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DeleteTaskScreen(task: task),
+                          )).then((value) {
+                        setState(() {
+                          getData();
+                        });
+                      });
                     },
                   ),
                 ],
