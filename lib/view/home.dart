@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pomodoro/model/Storage.dart';
 import 'package:pomodoro/model/Task.dart';
 import 'package:pomodoro/view/deleteTask.dart';
+import 'package:pomodoro/view/editTask.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -66,7 +67,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   GestureDetector(
-                    onLongPress: () {},
+                    onLongPress: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditTaskForm(oldTask: task),
+                          )).then((value) {
+                        setState(() {
+                          getData();
+                        });
+                      });
+                    },
                     child: Container(
                       decoration: BoxDecoration(color: Colors.white,
                           // borderRadius: BorderRadius.circular(40),
