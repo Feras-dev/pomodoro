@@ -62,50 +62,56 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _cards() {
     return taskList
-        .map((task) => Container(
-              width: 100,
-              height: 60,
-              decoration: BoxDecoration(color: Colors.white,
-                  // borderRadius: BorderRadius.circular(40),
-                  boxShadow: [
-                    BoxShadow(),
-                    //   BoxShadow(offset: Offset(20, 20), color: Colors.yellow),
-                  ]),
-              margin: EdgeInsets.all(5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    task.name,
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                  Text(
-                    task.workDuration.toString(),
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                  Text(
-                    task.breakDuration.toString(),
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.delete),
-                    color: Colors.grey,
-                    //size: 24.0,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DeleteTaskScreen(task: task),
-                          )).then((value) {
-                        setState(() {
-                          getData();
-                        });
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ))
+        .map((task) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  GestureDetector(
+                    onLongPress: () {},
+                    child: Container(
+                      decoration: BoxDecoration(color: Colors.white,
+                          // borderRadius: BorderRadius.circular(40),
+                          boxShadow: [
+                            BoxShadow(),
+                            //   BoxShadow(offset: Offset(20, 20), color: Colors.yellow),
+                          ]),
+                      margin: EdgeInsets.all(5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            task.name,
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          Text(
+                            task.workDuration.toString(),
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          Text(
+                            task.breakDuration.toString(),
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            color: Colors.grey,
+                            //size: 24.0,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DeleteTaskScreen(task: task),
+                                  )).then((value) {
+                                setState(() {
+                                  getData();
+                                });
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ]))
         .toList();
   }
 }
