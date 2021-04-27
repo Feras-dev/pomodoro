@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         // All the available routes in the app.
         '/home': (context) => HomeScreen(),
-        '/addTask': (context) => AddTaskForm(),
+        '/addTask': (context) => AddTaskForm(oldTask: null),
       },
       // The app's entry page.
       home: HomeScreen(),
