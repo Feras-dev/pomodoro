@@ -79,7 +79,7 @@ class Storage {
     // Remove the selected item from the task list by matching the
     // task name. taskDel is the task to be deleted and element is the
     // matched element during the traversal of list
-    taskList.removeWhere((element) => (element.name == taskDel.name));
+    taskList.removeWhere((element) => (element.id == taskDel.id));
 
     // Encode the modified list into JSON again to store.
     List<String> myList =
@@ -109,7 +109,7 @@ class Storage {
     // Remove the selected item from the task list by matching the
     // task name. taskDel is the task to be deleted and element is the
     // matched element during the traversal of list
-    taskList.removeWhere((element) => (element.name == oldTask.name));
+    taskList.removeWhere((element) => (element.id == oldTask.id));
     taskList.add(newTask);
 
     // Encode the modified list into JSON again to store.

@@ -19,7 +19,9 @@ showAlertDialog(BuildContext context) {
   Widget okButton = TextButton(
     child: Text("OK"),
     onPressed: () {
-      Navigator.pushNamed(context, "/home");
+      //Navigator.pushNamed(context, "/home");
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
     },
   );
 

@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
       routes: {
         // All the available routes in the app.
         '/home': (context) => HomeScreen(),
-        '/addTask': (context) => AddTaskForm(),
+        '/addTask': (context) => AddTaskForm(oldTask: null),
       },
       // The app's entry page.
       home: HomeScreen(),
