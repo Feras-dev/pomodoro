@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pomodoro/model/Storage.dart';
 import 'package:pomodoro/model/Task.dart';
 import 'package:pomodoro/view/deleteTask.dart';
-import 'package:pomodoro/view/editTask.dart';
+import 'package:pomodoro/view/addTask.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EditTaskForm(oldTask: task),
+                            builder: (context) => AddTaskForm(oldTask: task),
                           )).then((value) {
                         setState(() {
                           getData();
