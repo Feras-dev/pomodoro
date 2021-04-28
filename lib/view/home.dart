@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // page.
   @override
   void initState() {
+    super.initState();
     getData();
   }
 
