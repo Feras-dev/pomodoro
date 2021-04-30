@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pomodoro/model/Storage.dart';
 import 'package:pomodoro/model/Task.dart';
+import 'package:pomodoro/view/deleteTask.dart';
+import 'package:pomodoro/view/addTask.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // page.
   @override
   void initState() {
+    super.initState();
     getData();
   }
 
@@ -61,34 +64,66 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _cards() {
     return taskList
-        .map((task) => Container(
-              width: 100,
-              height: 60,
-              decoration: BoxDecoration(color: Colors.white,
-                  // borderRadius: BorderRadius.circular(40),
-                  boxShadow: [
-                    BoxShadow(),
-                    //   BoxShadow(offset: Offset(20, 20), color: Colors.yellow),
-                  ]),
-              margin: EdgeInsets.all(5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    task.name,
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                  Text(
-                    task.workDuration.toString(),
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                  Text(
-                    task.breakDuration.toString(),
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                ],
-              ),
-            ))
+        .map((task) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  GestureDetector(
+                    onLongPress: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddTaskForm(oldTask: task),
+                          )).then((value) {
+                        setState(() {
+                          getData();
+                        });
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(color: Colors.white,
+                          // borderRadius: BorderRadius.circular(40),
+                          boxShadow: [
+                            BoxShadow(),
+                            //   BoxShadow(offset: Offset(20, 20), color: Colors.yellow),
+                          ]),
+                      margin: EdgeInsets.all(5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            task.name,
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          Text(
+                            task.workDuration.toString(),
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          Text(
+                            task.breakDuration.toString(),
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            color: Colors.grey,
+                            //size: 24.0,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DeleteTaskScreen(task: task),
+                                  )).then((value) {
+                                setState(() {
+                                  getData();
+                                });
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ]))
         .toList();
   }
 }
