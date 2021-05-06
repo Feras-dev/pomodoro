@@ -12,7 +12,7 @@ void main() async {
   // Get a SharedPreferences instance just to enable
   // SharedPreferences.
   await Storage().enableStorage();
-  // Storage().removeAllTasks();
+  Storage().removeAllTasks();
   runApp(MyApp());
 }
 
