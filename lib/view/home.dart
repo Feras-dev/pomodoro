@@ -37,8 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pomodoro'),
-        centerTitle: true,
+        title: Text('My Tasks'),
       ),
       body: Container(
         padding: EdgeInsets.all(10),
@@ -47,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Color(0xFF20dac5),
         onPressed: () {
           // Navigator pushes based on the string we have given
           // in the routes object. The then function is called when
@@ -58,9 +58,12 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           });
         },
-        label: Text('Add Task'),
+        label: Text(
+          'Add Task',
+          style: TextStyle(color: Color(0xFF04433d)),
+        ),
         tooltip: 'Increment',
-        icon: Icon(Icons.add),
+        icon: Icon(Icons.add, color: Color(0xFF04433d)),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

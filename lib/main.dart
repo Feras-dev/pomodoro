@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Pomodoro',
       theme: ThemeData(
-        primarySwatch: buildMaterialColor(Color(0xFF884aee)),
+        primarySwatch: buildMaterialColor(Color(0xFF6200ef)),
       ),
       routes: {
         // All the available routes in the app.
