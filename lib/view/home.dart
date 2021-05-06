@@ -39,9 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Container(
         padding: EdgeInsets.all(10),
-        child: ListView(
-          children: _cards(),
-        ),
+        child: (taskList != null && taskList.isNotEmpty)
+            ? ListView(
+                children: _cards(),
+              )
+            : _noTasks(),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -60,6 +62,24 @@ class _HomeScreenState extends State<HomeScreen> {
         icon: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  Widget _noTasks() {
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'No tasks to complete.',
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+        Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 6)),
+        Text(
+          'Press Add Task to add a new one!',
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+      ],
+    ));
   }
 
   List<Widget> _cards() {
