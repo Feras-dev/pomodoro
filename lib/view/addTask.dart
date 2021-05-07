@@ -7,7 +7,9 @@ import 'package:uuid/uuid.dart';
 // Create a Form widget.
 class AddTaskForm extends StatefulWidget {
   final Task oldTask;
+
   AddTaskForm({Key key, @required this.oldTask}) : super(key: key);
+
   @override
   AddTaskFormState createState() {
     return AddTaskFormState(oldTask);
@@ -15,13 +17,13 @@ class AddTaskForm extends StatefulWidget {
 }
 
 // Method to build and show alert box.
-showAlertDialog(BuildContext context, String title, String content) {
+showAlertDialog(BuildContext context, String title, String content, Task task) {
   // Create OK button
   Widget okButton = TextButton(
     child: Text("OK"),
     onPressed: () {
       Navigator.of(context).pop();
-      Navigator.of(context).pop();
+      Navigator.pop(context, task);
     },
   );
 
@@ -105,7 +107,7 @@ class AddTaskFormState extends State<AddTaskForm> {
     }
     // Show alert only if the task has been stored successfully.
     if (isSuccess) {
-      showAlertDialog(context, alertTitle, alertContent);
+      showAlertDialog(context, alertTitle, alertContent, task);
     }
   }
 
@@ -246,35 +248,37 @@ class AddTaskFormState extends State<AddTaskForm> {
         appBar: AppBar(
           title: Text(pageTitle),
         ),
-        body: Form(
-          key: _formKey,
-          child: Container(
-            padding: EdgeInsets.all(20.0),
-            child: Column(
-              // CrossAxisAlignment is used to align dropdown to
-              // start of the screen.
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildTaskField(),
-                _buildWorkIntervalField(),
-                _buildBreakIntervalField(),
-                _priorityText(),
-                _buildPriorityLevelList(),
-                Container(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    child: Text(buttonText),
-                    onPressed: () {
-                      // Validate the form and show appropriate errors.
-                      if (_formKey.currentState.validate()) {
-                        _formKey.currentState.save();
-                        // Save the data.
-                        saveData(context);
-                      }
-                    },
-                  ),
-                )
-              ],
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Container(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                // CrossAxisAlignment is used to align dropdown to
+                // start of the screen.
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _buildTaskField(),
+                  _buildWorkIntervalField(),
+                  _buildBreakIntervalField(),
+                  _priorityText(),
+                  _buildPriorityLevelList(),
+                  Container(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      child: Text(buttonText),
+                      onPressed: () {
+                        // Validate the form and show appropriate errors.
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          // Save the data.
+                          saveData(context);
+                        }
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ));
