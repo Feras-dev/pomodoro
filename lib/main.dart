@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pomodoro/model/Storage.dart';
 import 'view/addTask.dart';
 import 'view/home.dart';
+import 'package:pomodoro/notification_manager/NotificationManager.dart';
 
 void main() async {
   // If you're running an application and need to access the binary
@@ -9,10 +10,14 @@ void main() async {
   // plugin initialization), then you need to explicitly call the
   // `WidgetsFlutterBinding.ensureInitialized()` first.
   WidgetsFlutterBinding.ensureInitialized();
+  
   // Get a SharedPreferences instance just to enable
   // SharedPreferences.
   await Storage().enableStorage();
   // Storage().removeAllTasks();
+
+  await NotificationManager().initNotificationManager();
+
   runApp(MyApp());
 }
 
