@@ -17,7 +17,11 @@ class SprintScreen extends StatefulWidget {
 }
 
 class SprintScreenState extends State<SprintScreen> {
+  // Task object to keep track if user updates the task.
   Task currentTask;
+
+  // This will handle the UI. True if user is idle and next phase
+  // is work phase.
   bool isWorkTime = true;
   String topLabel, startLabel;
 
@@ -38,6 +42,7 @@ class SprintScreenState extends State<SprintScreen> {
     });
   }
 
+  // Executed after pressing Gear button.
   _editTask(Task task) async {
     Navigator.push(
         context,
@@ -45,6 +50,7 @@ class SprintScreenState extends State<SprintScreen> {
           builder: (context) => AddTaskForm(oldTask: widget.task),
         )).then((value) {
       setState(() {
+        // Takes edited Task and sets it into state
         if (value != null) currentTask = value;
       });
     });
@@ -63,6 +69,8 @@ class SprintScreenState extends State<SprintScreen> {
               children: [
                 Container(
                   padding: EdgeInsets.all(20),
+                  // MediaQuery is used to get current screens dimensions
+                  // and set width and height of widgets accordingly.
                   width: (MediaQuery.of(context).size.width) * 0.8,
                   child: Text(
                     currentTask.name,
@@ -82,7 +90,7 @@ class SprintScreenState extends State<SprintScreen> {
                             ),
                             onPressed: () => _editTask(currentTask)),
                       )
-                    : Container()
+                    : Container() // Hide Gear Icon if user is not idle.
               ],
             ),
           ),
@@ -93,11 +101,15 @@ class SprintScreenState extends State<SprintScreen> {
                   Text(topLabel, style: Theme.of(context).textTheme.headline6),
             ),
           ),
+          // Expanded widget automatically handles the dimensions of
+          // wrapped widget if other widgets have fixed dimensions
+          // and UI is going outside the screen.
           Expanded(
               child: Container(
             height: (MediaQuery.of(context).size.height) * 0.5,
             child: Center(
               child: Text(
+                // This needs improvements.
                 currentTask.workDuration.toString(),
                 style: TextStyle(
                     fontSize: 82,
@@ -118,6 +130,7 @@ class SprintScreenState extends State<SprintScreen> {
                       setState(() {
                         // FOR DEBUG ONLY
                         isWorkTime = !isWorkTime;
+                        // Update labels.
                         _changeState();
                       });
                     },
@@ -135,6 +148,7 @@ class SprintScreenState extends State<SprintScreen> {
                         ),
                       )
                     : Container()
+                // Hide quit sprint button if user is not Idle.
               ],
             ),
           )
