@@ -62,14 +62,12 @@ class DeleteTaskScreenState extends State<DeleteTaskScreen> {
         children: <Widget>[
           Container(
             padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
-            child: Row(
-              children: [
-                Text(
-                  "Are you sure you want to delete this task?",
-                  style:
-                      TextStyle(fontSize: 20, color: Colors.black, height: 1.2),
-                ),
-              ],
+            child: Expanded(
+              child: Text(
+                "Are you sure you want to delete this task?",
+                style:
+                    TextStyle(fontSize: 20, color: Colors.black, height: 1.2),
+              ),
             ),
           ),
           Container(

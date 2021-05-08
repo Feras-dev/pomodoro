@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
       title: 'Pomodoro',
       theme: ThemeData(primarySwatch: Colors.red),
       routes: {
-        // All the available routes in the app.
+        // Routes in the app.
+        // Used only for named navigation.
         '/home': (context) => HomeScreen(),
         '/addTask': (context) => AddTaskForm(oldTask: null),
       },

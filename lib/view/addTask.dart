@@ -149,12 +149,7 @@ class AddTaskFormState extends State<AddTaskForm> {
       // Returning null indicates no errors and
       // validation passes.
       validator: (value) {
-        if (value.isEmpty) {
-          return "Please enter work interval";
-        } else if (!isNumber(value)) {
-          return "Please enter a valid number";
-        }
-        return null;
+        return checkInterval(value);
       },
       // For opening the number keyboard.
       keyboardType: TextInputType.number,
@@ -174,12 +169,7 @@ class AddTaskFormState extends State<AddTaskForm> {
   Widget _buildBreakIntervalField() {
     return TextFormField(
       validator: (value) {
-        if (value.isEmpty) {
-          return "Please enter break interval";
-        } else if (!isNumber(value)) {
-          return "Please enter a valid number";
-        }
-        return null;
+        return checkInterval(value);
       },
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
@@ -192,6 +182,17 @@ class AddTaskFormState extends State<AddTaskForm> {
         });
       },
     );
+  }
+
+  String checkInterval(String value) {
+    if (value.isEmpty) {
+      return "Please enter break interval";
+    } else if (!isNumber(value)) {
+      return "Please enter a valid number";
+    } else if (int.parse(value) < 1 || int.parse(value) > 999) {
+      return "Please enter a number between 1 to 999";
+    }
+    return null;
   }
 
   // A simple static text with padding.
