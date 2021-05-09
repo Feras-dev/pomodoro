@@ -1,13 +1,16 @@
 // imports
-import 'dart:convert';
+// import 'dart:convert';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter/services.dart' show rootBundle;
+// import 'package:flutter/services.dart' show rootBundle;
 // import '../state_machine/StatesMachineConstants.dart';
 
-String jsonFile = 'lib/notification_manager/NotificationManagerConstants.json';
+// String jsonFile = 'lib/notification_manager/NotificationManagerConstants.json';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+// FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+//     FlutterLocalNotificationsPlugin();
+
+// const AndroidInitializationSettings initializationSettingsAndroid =
+//     AndroidInitializationSettings('app_icon');
 
 // class definition
 class NotificationManager {
@@ -15,33 +18,30 @@ class NotificationManager {
   DateTime lastNotificationTimestamp;
   int minTimeBetweenNotifications = 2; // notifications throttle in seconds
   Map<String, dynamic> nmconsts; // map to hold notification contstants
-  int currNotificationId = 0; // increment to avoide overwritting the same notification
+  int currNotificationId =
+      0; // increment to avoide overwritting the same notification
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   // State state;
 
-  NotificationManager() {
-    // initNotificationManager();
-  }
+  /// constructor
+  NotificationManager(
+      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) {
+    flutterLocalNotificationsPlugin = flutterLocalNotificationsPlugin;
 
-  // methods
-  ///initialize notification manager. call only once upon app launching.
-  ///@return: true if initialized successfully. false otherwise.
-  Future<bool> initNotificationManager() async {
     // set last notification timestamp to current time
     lastNotificationTimestamp = DateTime.now();
 
-    // load notification manager constants
-    nmconsts = await getJson(jsonFile);
-    if (nmconsts == null) {
-      currNotificationId += 1;
-      _showNotification(currNotificationId, nmconsts['init']['title'],
-          nmconsts['init']['failure']);
-    }
+    // // load notification manager constants
+    // nmconsts = await getJson(jsonFile);
+    // if (nmconsts == null) {
+    //   currNotificationId += 1;
+    //   _showNotification(currNotificationId, 'notification manager init',
+    //       'notification initlization failed');
+    // }
 
     currNotificationId += 1;
-    _showNotification(currNotificationId, nmconsts['init']['title'],
-        nmconsts['init']['success']);
-
-    return true;
+    _showNotification(currNotificationId, 'notification manager init',
+        'notification initlization success');
   }
 
   /// notify the user that the state has changed.
@@ -49,9 +49,9 @@ class NotificationManager {
   bool notifyUserAboutStateChange(String oldState, String newState) {
     // currNotificationId += 1;
     // String title = nmconsts['stateChange']['title'];
-    
+
     // if(oldState == ) {
-      
+
     // }
 
     // _showNotification(currNotificationId, ,
@@ -81,19 +81,36 @@ class NotificationManager {
             '507', 'Pomodoro', 'Pomodoro notifification channel',
             importance: Importance.max,
             priority: Priority.high,
-            ticker: 'ticker');
+            showWhen: true); // show notification timestamp
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin
         .show(i, title, body, platformChannelSpecifics, payload: 'item: x');
   }
 
-  /// read json file and store it as a map
-  Future<Map<String, dynamic>> getJson(String jsonFileName) async {
-    Future<String> myStr = rootBundle.loadString(jsonFileName);
+  // /// read json file and store it as a map
+  // Future<Map<String, dynamic>> getJson(String jsonFileName) async {
+  //   Future<String> myStr = rootBundle.loadString(jsonFileName);
 
-    Map<String, dynamic> myMap = jsonDecode(await myStr);
+  //   Map<String, dynamic> myMap = jsonDecode(await myStr);
 
-    return myMap;
-  }
+  //   return myMap;
+  // }
+}
+
+/// call from entry-point functiona (most commonly main)
+Future<FlutterLocalNotificationsPlugin>
+    initNotificationManagerDependencies() async {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings(/*'@mipmap-hdpi*/'ic_launcher');
+
+  final InitializationSettings initializationSettings =
+      InitializationSettings(android: initializationSettingsAndroid);
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+  return flutterLocalNotificationsPlugin;
 }
