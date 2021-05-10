@@ -246,35 +246,37 @@ class AddTaskFormState extends State<AddTaskForm> {
         appBar: AppBar(
           title: Text(pageTitle),
         ),
-        body: Form(
-          key: _formKey,
-          child: Container(
-            padding: EdgeInsets.all(20.0),
-            child: Column(
-              // CrossAxisAlignment is used to align dropdown to
-              // start of the screen.
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildTaskField(),
-                _buildWorkIntervalField(),
-                _buildBreakIntervalField(),
-                _priorityText(),
-                _buildPriorityLevelList(),
-                Container(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    child: Text(buttonText),
-                    onPressed: () {
-                      // Validate the form and show appropriate errors.
-                      if (_formKey.currentState.validate()) {
-                        _formKey.currentState.save();
-                        // Save the data.
-                        saveData(context);
-                      }
-                    },
-                  ),
-                )
-              ],
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Container(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                // CrossAxisAlignment is used to align dropdown to
+                // start of the screen.
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _buildTaskField(),
+                  _buildWorkIntervalField(),
+                  _buildBreakIntervalField(),
+                  _priorityText(),
+                  _buildPriorityLevelList(),
+                  Container(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      child: Text(buttonText),
+                      onPressed: () {
+                        // Validate the form and show appropriate errors.
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          // Save the data.
+                          saveData(context);
+                        }
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ));
