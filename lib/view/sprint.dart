@@ -70,7 +70,10 @@ class SprintScreenState extends State<SprintScreen> {
         )).then((value) {
       setState(() {
         // Takes edited Task and sets it into state
-        if (value != null) currentTask = value;
+        if (value != null) {
+          currentTask = value;
+          currentMinutes = currentTask.workDuration;
+        }
       });
     });
   }
