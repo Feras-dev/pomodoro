@@ -22,11 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pomodoro',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
+      theme: ThemeData(primarySwatch: Colors.red),
       routes: {
-        // All the available routes in the app.
+        // Routes in the app.
+        // Used only for named navigation.
         '/home': (context) => HomeScreen(),
         '/addTask': (context) => AddTaskForm(oldTask: null),
       },

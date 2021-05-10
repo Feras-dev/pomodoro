@@ -3,6 +3,7 @@ import 'package:pomodoro/model/Storage.dart';
 import 'package:pomodoro/model/Task.dart';
 import 'package:pomodoro/view/deleteTask.dart';
 import 'package:pomodoro/view/addTask.dart';
+import 'package:pomodoro/view/sprint.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -60,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         label: Text('Add Task'),
         tooltip: 'Increment',
         icon: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 
@@ -93,6 +94,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => AddTaskForm(oldTask: task),
+                          )).then((value) {
+                        setState(() {
+                          getData();
+                        });
+                      });
+                    },
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SprintScreen(task: task),
                           )).then((value) {
                         setState(() {
                           getData();

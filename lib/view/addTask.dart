@@ -7,7 +7,9 @@ import 'package:uuid/uuid.dart';
 // Create a Form widget.
 class AddTaskForm extends StatefulWidget {
   final Task oldTask;
+
   AddTaskForm({Key key, @required this.oldTask}) : super(key: key);
+
   @override
   AddTaskFormState createState() {
     return AddTaskFormState(oldTask);
@@ -15,13 +17,13 @@ class AddTaskForm extends StatefulWidget {
 }
 
 // Method to build and show alert box.
-showAlertDialog(BuildContext context, String title, String content) {
+showAlertDialog(BuildContext context, String title, String content, Task task) {
   // Create OK button
   Widget okButton = TextButton(
     child: Text("OK"),
     onPressed: () {
       Navigator.of(context).pop();
-      Navigator.of(context).pop();
+      Navigator.pop(context, task);
     },
   );
 
@@ -105,7 +107,7 @@ class AddTaskFormState extends State<AddTaskForm> {
     }
     // Show alert only if the task has been stored successfully.
     if (isSuccess) {
-      showAlertDialog(context, alertTitle, alertContent);
+      showAlertDialog(context, alertTitle, alertContent, task);
     }
   }
 
@@ -147,12 +149,7 @@ class AddTaskFormState extends State<AddTaskForm> {
       // Returning null indicates no errors and
       // validation passes.
       validator: (value) {
-        if (value.isEmpty) {
-          return "Please enter work interval";
-        } else if (!isNumber(value)) {
-          return "Please enter a valid number";
-        }
-        return null;
+        return checkInterval(value);
       },
       // For opening the number keyboard.
       keyboardType: TextInputType.number,
@@ -172,12 +169,7 @@ class AddTaskFormState extends State<AddTaskForm> {
   Widget _buildBreakIntervalField() {
     return TextFormField(
       validator: (value) {
-        if (value.isEmpty) {
-          return "Please enter break interval";
-        } else if (!isNumber(value)) {
-          return "Please enter a valid number";
-        }
-        return null;
+        return checkInterval(value);
       },
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
@@ -190,6 +182,17 @@ class AddTaskFormState extends State<AddTaskForm> {
         });
       },
     );
+  }
+
+  String checkInterval(String value) {
+    if (value.isEmpty) {
+      return "Please enter break interval";
+    } else if (!isNumber(value)) {
+      return "Please enter a valid number";
+    } else if (int.parse(value) < 1 || int.parse(value) > 999) {
+      return "Please enter a number between 1 to 999";
+    }
+    return null;
   }
 
   // A simple static text with padding.
