@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pomodoro/model/Storage.dart';
+import 'package:pomodoro/controller/Storage.dart';
 import 'package:pomodoro/model/Task.dart';
 import 'package:pomodoro/view/deleteTask.dart';
 import 'package:pomodoro/view/addTask.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pomodoro/model/PriorityLevel.dart';
-import 'package:pomodoro/model/Storage.dart';
+import 'package:pomodoro/controller/Storage.dart';
 import 'package:pomodoro/model/Task.dart';
 import 'package:uuid/uuid.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pomodoro/model/Storage.dart';
+import 'package:pomodoro/controller/Storage.dart';
 import 'package:pomodoro/model/Task.dart';
 
 // The Delete Task widget
