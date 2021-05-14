@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Task.dart';
+import '../model/Task.dart';
 
 // A singleton class to access the storage.
 // https://dart.academy/creational-design-patterns-for-dart-and-flutter-singleton/
